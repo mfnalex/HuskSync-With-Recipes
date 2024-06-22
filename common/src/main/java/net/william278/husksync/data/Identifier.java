@@ -39,6 +39,7 @@ import java.util.stream.Stream;
 public class Identifier {
 
     // Built-in identifiers
+    public static final Identifier RECIPES = huskSync("recipes", false);
     public static final Identifier PERSISTENT_DATA = huskSync("persistent_data", true);
     public static final Identifier INVENTORY = huskSync("inventory", true);
     public static final Identifier ENDER_CHEST = huskSync("ender_chest", true);
@@ -164,7 +165,8 @@ public class Identifier {
     public static Map<String, Boolean> getConfigMap() {
         return Map.ofEntries(Stream.of(
                         INVENTORY, ENDER_CHEST, POTION_EFFECTS, ADVANCEMENTS, LOCATION, STATISTICS,
-                        HEALTH, HUNGER, ATTRIBUTES, EXPERIENCE, GAME_MODE, FLIGHT_STATUS, PERSISTENT_DATA
+                        HEALTH, HUNGER, ATTRIBUTES, EXPERIENCE, GAME_MODE, FLIGHT_STATUS, PERSISTENT_DATA,
+                        RECIPES
                 )
                 .map(Identifier::getConfigEntry)
                 .toArray(Map.Entry[]::new));

@@ -161,6 +161,11 @@ public interface Data {
         List<Advancement> getCompleted();
 
         @NotNull
+        default List<Advancement> getCompleted(boolean includeRecipes) {
+            return includeRecipes ? getCompleted() : getCompletedExcludingRecipes();
+        }
+
+        @NotNull
         default List<Advancement> getCompletedExcludingRecipes() {
             return getCompleted().stream().filter(adv -> !adv.getKey().startsWith(RECIPE_ADVANCEMENT)).toList();
         }

@@ -23,6 +23,7 @@ import net.william278.husksync.HuskSync;
 import net.william278.husksync.config.Locales;
 import net.william278.husksync.data.Data;
 import net.william278.husksync.data.DataSnapshot;
+import net.william278.husksync.data.Identifier;
 import net.william278.husksync.user.CommandUser;
 import net.william278.husksync.user.User;
 import org.jetbrains.annotations.NotNull;
@@ -96,11 +97,12 @@ public class DataSnapshotOverview {
                 .ifPresent(user::sendMessage);
 
         // Advancement and statistic data, if both are present in the snapshot
+        final boolean includeRecipes = plugin.getSettings().getSynchronization().isFeatureEnabled(Identifier.RECIPES);
         snapshot.getAdvancements()
                 .flatMap(advancementData -> snapshot.getStatistics()
                         .flatMap(statisticsData -> locales.getLocale("data_manager_advancements_statistics",
-                                Integer.toString(advancementData.getCompletedExcludingRecipes().size()),
-                                generateAdvancementPreview(advancementData.getCompletedExcludingRecipes(), locales),
+                                Integer.toString(advancementData.getCompleted(includeRecipes).size()),
+                                generateAdvancementPreview(advancementData.getCompleted(includeRecipes), locales),
                                 String.format("%.2f", (((statisticsData.getGenericStatistics().getOrDefault(
                                         "minecraft:play_one_minute", 0)) / 20d) / 60d) / 60d))))
                 .ifPresent(user::sendMessage);
